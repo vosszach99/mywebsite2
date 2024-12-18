@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dollar and Coin Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .input-field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        input {
+            width: 50px;
+            text-align: center;
+        }
+
+        .total {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .deposit {
+            margin-top: 10px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Dollar and Coin Counter</h1>
+    <div class="container">
+        <div class="input-field">
+            <label for="hundredDollar">$100 Bills:</label>
+            <input type="number" id="hundredDollar" min="0" value="0" onchange="calculateTotal()">
+        </div>
+        <div class="input-field">
+            <label for="fiftyDollar">$50 Bills:</label>
+            <input type="number" id="fiftyDollar" min="0" value="0" onchange="calculateTotal()">
+        </div>
+        <div class="input-field">
+            <label for="twentyDollar">$20 Bills:</label>
+            <input type="number" id="twentyDollar" min="0" value="0" onchange="calculateTotal()">
+        </div>
+        <div class="input-field">
+            <label for="tenDollar">$10 Bills:</label>
+            <input type="number" id="tenDollar" min="0" value="0" onchange="calculateTotal()">
+        </div>
+        <div class="input-field">
+            <label for="fiveDollar">$5 Bills:</label>
+            <input type="number" id="fiveDollar" min="0" value="0" onchange="calculateTotal()">
+        </div>
+        <div class="input-field">
+            <label for="oneDollar">$1 Bills:</label>
+            <input type="number" id="oneDollar" min="0" value="0" onchange="calculateTotal()">
+        </div>
+        <div class="input-field">
+            <label for="quarters">Quarters (¢25):</label>
+            <input type="number" id="quarters" min="0" value="0" onchange="calculateTotal()">
+        </div>
+        <div class="input-field">
+            <label for="dimes">Dimes (¢10):</label>
+            <input type="number" id="dimes" min="0" value="0" onchange="calculateTotal()">
+        </div>
+        <div class="input-field">
+            <label for="nickels">Nickels (¢5):</label>
+            <input type="number" id="nickels" min="0" value="0" onchange="calculateTotal()">
+        </div>
+        <div class="input-field">
+            <label for="pennies">Pennies (¢1):</label>
+            <input type="number" id="pennies" min="0" value="0" onchange="calculateTotal()">
+        </div>
+    </div>
+    <div class="total" id="totalAmount">Total: $0.00</div>
+    <div class="buttons">
+        <button onclick="clearFields()">Clear</button>
+    </div>
+    <div class="buttons">
+        <button onclick="calculateDeposit()">Calculate Deposit Total</button>
+        <span id="depositTotal" class="deposit">Deposit Total: $0.00</span>
+    </div>
+
+    <script>
+        function calculateTotal() {
+            // Coin values
+            const pennies = parseInt(document.getElementById('pennies').value) * 0.01;
+            const nickels = parseInt(document.getElementById('nickels').value) * 0.05;
+            const dimes = parseInt(document.getElementById('dimes').value) * 0.10;
+            const quarters = parseInt(document.getElementById('quarters').value) * 0.25;
+
+            // Bill values
+            const oneDollar = parseInt(document.getElementById('oneDollar').value) * 1.00;
+            const fiveDollar = parseInt(document.getElementById('fiveDollar').value) * 5.00;
+            const tenDollar = parseInt(document.getElementById('tenDollar').value) * 10.00;
+            const twentyDollar = parseInt(document.getElementById('twentyDollar').value) * 20.00;
+            const fiftyDollar = parseInt(document.getElementById('fiftyDollar').value) * 50.00;
+            const hundredDollar = parseInt(document.getElementById('hundredDollar').value) * 100.00;
+
+            // Calculate total
+            const total = pennies + nickels + dimes + quarters +
+                oneDollar + fiveDollar + tenDollar + twentyDollar +
+                fiftyDollar + hundredDollar;
+
+            // Update total
+            document.getElementById('totalAmount').innerText = `Total: $${total.toFixed(2)}`;
+        }
+
+        function clearFields() {
+            const fields = document.querySelectorAll('input');
+            fields.forEach(field => field.value = 0);
+            document.getElementById('totalAmount').innerText = 'Total: $0.00';
+            document.getElementById('depositTotal').innerText = 'Deposit Total: $0.00';
+        }
+
+        function calculateDeposit() {
+            const totalText = document.getElementById('totalAmount').innerText;
+            const total = parseFloat(totalText.replace('Total: $', ''));
+            const depositTotal = total - 150;
+
+            document.getElementById('depositTotal').innerText = `Deposit Total: $${depositTotal.toFixed(2)}`;
+        }
+    </script>
+</body>
+
+</html>
